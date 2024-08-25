@@ -7,7 +7,7 @@ async function e_GP(deptIds) {
     const announceTypes = ['W0', 'W2', 'B0', 'D0', 'D1', 'D2', 'P0', 'W1', '15'];
 
     const parser = new xml2js.Parser();
-    const myData = [];
+    let myData = [];
 
     const fetchData = (url) => {
         return new Promise((resolve, reject) => {

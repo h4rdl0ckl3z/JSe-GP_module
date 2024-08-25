@@ -62,7 +62,9 @@ async function e_GP(deptIds) {
         const tasks = [];
         for (const announceType of announceTypes) {
             for (const deptId of deptIds) {
-                tasks.push(fetchAndParse(announceType, deptId));
+                if (deptId != '') {
+                    tasks.push(fetchAndParse(announceType, deptId));
+                }
             }
         }
         await Promise.all(tasks);

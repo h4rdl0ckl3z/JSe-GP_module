@@ -72,7 +72,7 @@ async function e_GP(deptIds) {
         console.error('Error in processing the tasks:', error);
     }
 
-    return myData;
+    return JSON.stringify(myData);
 }
 
 module.exports = { e_GP };

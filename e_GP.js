@@ -42,7 +42,7 @@ async function e_GP(deptIds) {
 
             if (items) {
                 items.forEach(item => {
-                    const listData = {};
+                    let listData = {};
                     for (const [key, value] of Object.entries(item)) {
                         if (key !== 'description' && key !== 'guid') {
                             listData[key] = value[0];

@@ -1,5 +1,8 @@
 # JSe-GP_module (Thai Government Procurement)
 ## NodeJS ≥ 18
+```
+npm install
+```
 ### example
 ```
 e_GP(['egpid']).then(function (data) {

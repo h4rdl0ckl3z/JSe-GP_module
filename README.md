@@ -17,7 +17,8 @@ e_GP(['egpid']).then(function (data) {
     console.log(data);
 });
 ```
-![image](https://github.com/user-attachments/assets/68cf6832-95fb-4490-8cea-11911ba3f7ec)
+![image](https://github.com/user-attachments/assets/cd9987d5-ada6-4e88-a375-a6e8cd147b33)
+
 
 ###### Python
 ###### https://github.com/h4rdl0ckl3z/PYe-GP_module

@@ -51,7 +51,6 @@ async function e_GP(deptIds) {
                     listData['announceType'] = announceType;
                     listData['egpid'] = deptId;
                     myData.push(listData);
-                    listData = {}
                 });
             }
         } catch (error) {

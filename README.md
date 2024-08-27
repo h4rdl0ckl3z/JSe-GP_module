@@ -22,5 +22,3 @@ e_GP(['egpid']).then(function (data) {
 
 ###### Python
 ###### https://github.com/h4rdl0ckl3z/PYe-GP_module
-
-Discord -> https://discord.gg/tDdse2UYwZ

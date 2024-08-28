@@ -13,7 +13,7 @@ async function e_GP(deptIds) {
     const fetchData = (url) => {
         return new Promise((resolve, reject) => {
             http.get(url, (response) => {
-                let chunks = [];
+                const chunks = [];
 
                 response.on('data', (chunk) => {
                     chunks.push(chunk);
@@ -25,31 +25,31 @@ async function e_GP(deptIds) {
                     resolve(decodedContent);
                 });
 
-                response.on('error', (err) => {
-                    reject(err);
-                });
-            }).on('error', (err) => {
-                reject(err);
-            });
+                response.on('error', reject);
+            }).on('error', reject);
         });
     };
 
     const parseAndProcessData = async (response, announceType, deptId) => {
-        const parsedData = await parser.parseStringPromise(response);
-        const items = parsedData.rss.channel[0].item;
+        try {
+            const parsedData = await parser.parseStringPromise(response);
+            const items = parsedData.rss.channel[0].item || [];
 
-        if (items) {
             items.forEach(item => {
-                let listData = {};
+                const listData = {};
+
                 for (const [key, value] of Object.entries(item)) {
                     if (key !== 'description' && key !== 'guid') {
                         listData[key] = value[0];
                     }
                 }
+
                 listData['announceType'] = announceType;
                 listData['egpid'] = deptId;
                 myData.push(listData);
             });
+        } catch (error) {
+            console.error(`Error parsing XML for deptId: ${deptId}, announceType: ${announceType}`, error);
         }
     };
 
@@ -64,17 +64,13 @@ async function e_GP(deptIds) {
     };
 
     try {
-        const tasks = [];
-        for (const announceType of announceTypes) {
-            for (const deptId of deptIds) {
-                if (deptId !== '') {
-                    tasks.push(limit(() => fetchAndParse(announceType, deptId)));
-                }
-            }
-        }
+        const tasks = deptIds
+            .filter(deptId => deptId)
+            .flatMap(deptId => announceTypes.map(announceType => limit(() => fetchAndParse(announceType, deptId))));
+
         await Promise.all(tasks);
     } catch (error) {
-        console.error('Error in processing the tasks:', error);
+        console.error('Error in processing tasks:', error);
     }
 
     return JSON.stringify(myData);

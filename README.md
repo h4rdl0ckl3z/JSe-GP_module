@@ -1,4 +1,4 @@
-# JSe-GP_module (Thai Government Procurement)
+# JSe-GP_module (Thai e-Government Procurement)
 ## NodeJS ≥ 18
 ```
 npm install

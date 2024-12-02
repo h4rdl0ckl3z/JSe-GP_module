@@ -1,14 +1,12 @@
 const http = require('http');
 const xml2js = require('xml2js');
 const iconv = require('iconv-lite');
-const pLimit = require('p-limit');
 
 async function e_GP(deptIds) {
     const baseUrl = 'http://process3.gprocurement.go.th/EPROCRssFeedWeb/egpannouncerss.xml';
     const announceTypes = ['W0', 'W2', 'B0', 'D0', 'D1', 'D2', 'P0', 'W1', '15'];
     const parser = new xml2js.Parser();
     const myData = [];
-    const limit = pLimit(10);  // Limit to 10 concurrent requests
 
     const fetchData = (url) => {
         return new Promise((resolve, reject) => {
@@ -66,7 +64,7 @@ async function e_GP(deptIds) {
     try {
         const tasks = deptIds
             .filter(deptId => deptId)
-            .flatMap(deptId => announceTypes.map(announceType => limit(() => fetchAndParse(announceType, deptId))));
+            .flatMap(deptId => announceTypes.map(announceType => fetchAndParse(announceType, deptId)));
 
         await Promise.all(tasks);
     } catch (error) {
